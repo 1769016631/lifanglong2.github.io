@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>面试分计算器</title>
+    <style>
+        /* 简单的样式美化，提升使用体验 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        .result span {
+            color: #e53935;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>面试分计算器</h1>
+        
+        <!-- 输入区域 -->
+        <div class="input-group">
+            <label for="hkScore">会考分：</label>
+            <input type="number" id="hkScore" placeholder="请输入会考分数" step="0.01">
+        </div>
+
+        <div class="input-group">
+            <label for="zhScore">综合分：</label>
+            <input type="number" id="zhScore" placeholder="请输入综合分数" step="0.01">
+        </div>
+
+        <button onclick="calculateScore()">计算面试分</button>
+
+        <!-- 结果展示区域 -->
+        <div class="result" id="resultArea" style="display: none;">
+            会考文化分：<span id="hkWhScore"></span><br>
+            面试最终分：<span id="msFinalScore"></span><br>
+            面试分：<span id="msScore"></span>
+        </div>
+    </div>
+
+    <script>
+        // 核心计算函数
+        function calculateScore() {
+            // 获取输入的分数
+            const hkScore = parseFloat(document.getElementById('hkScore').value);
+            const zhScore = parseFloat(document.getElementById('zhScore').value);
+
+            // 验证输入是否有效
+            if (isNaN(hkScore) || isNaN(zhScore)) {
+                alert('请输入有效的数字！');
+                return;
+            }
+
+            // 按照公式计算
+            const hkWhScore = (hkScore / 10) * 0.4; // 会考文化分
+            const msFinalScore = zhScore - hkWhScore; // 面试最终分
+            const msScore = msFinalScore / 0.6; // 面试分
+
+            // 将结果保留两位小数（提升数据可读性）
+            const hkWhScoreFixed = hkWhScore.toFixed(2);
+            const msFinalScoreFixed = msFinalScore.toFixed(2);
+            const msScoreFixed = msScore.toFixed(2);
+
+            // 显示结果
+            document.getElementById('hkWhScore').textContent = hkWhScoreFixed;
+            document.getElementById('msFinalScore').textContent = msFinalScoreFixed;
+            document.getElementById('msScore').textContent = msScoreFixed;
+            document.getElementById('resultArea').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
